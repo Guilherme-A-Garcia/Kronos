@@ -41,7 +41,7 @@ Otherwise, using the binaries does not require anything.
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/Guilherme-A-Garcia/Kronos.git
-    cd Easy-DLP
+    cd Kronos
     ```
 
 2.  **Create and activate a virtual environment** (recommended):
