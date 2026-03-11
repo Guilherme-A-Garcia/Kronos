@@ -42,11 +42,54 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
     def __init__(self, controller):
         super().__init__(controller.root)
         self.controller = controller
+        
+        self.title("Kronos")
+        self.geometry("450x250")
+        self.resizable(False, False)
+
+        self.stopwatch_label = ctk.CTkLabel(self, font=("", 40), text="Stopwatch")
+        self.stopwatch_label.pack(pady=15)
+        
+        self.stopwatch_counter_frame = ctk.CTkFrame(self, height=50, border_width=1, corner_radius=20)
+        self.stopwatch_counter_frame.pack(anchor="center", fill='x', padx=100)
+
+        self.stopwatch_counter_label = ctk.CTkLabel(self.stopwatch_counter_frame, font=("", 28), text="00:00:00.00")
+        self.stopwatch_counter_label.pack(padx=2, pady=2)
+        
+        self.stopwatch_button_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.stopwatch_button_frame.rowconfigure(0, weight=1)
+        self.stopwatch_button_frame.columnconfigure((0,1,2), weight=1)
+        self.stopwatch_button_frame.pack(pady=15)
+        
+        self.stopwatch_start = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Start", width=80, corner_radius=10)
+        self.stopwatch_start.grid(row=0, column=0, sticky="nsew")
+    
+        self.stopwatch_stop = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10)
+        self.stopwatch_stop.grid(row=0, column=1, sticky="nsew", padx=5)
+        
+        self.stopwatch_reset = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10)
+        self.stopwatch_reset.grid(row=0, column=2, sticky="nsew")
+        
+        self.stopwatch_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
+        self.stopwatch_swap_frame.rowconfigure(0, weight=1)
+        self.stopwatch_swap_frame.columnconfigure((0,1), weight=1)
+        self.stopwatch_swap_frame.pack(anchor="se", pady=15, padx=(0,10))
+        
+        self.swap_stopwatch_button = ctk.CTkButton(self.stopwatch_swap_frame, font=("", 13), text="Stopwatch", width=100, corner_radius=2, fg_color="gray")
+        self.swap_stopwatch_button.configure(state="disabled")
+        self.swap_stopwatch_button.grid(row=0, column=0, sticky="nsew")
+        
+        self.swap_timer_button = ctk.CTkButton(self.stopwatch_swap_frame, font=("", 13), text="Timer", width=100, corner_radius=2)
+        self.swap_timer_button.grid(row=0, column=1, sticky="nsew")
     
 class TimerView(ctk.CTkToplevel):  # contains UI
     def __init__(self, controller):
         super().__init__(controller.root)
         self.controller = controller
+        
+        self.title("Kronos")
+        self.geometry("450x300")
+        self.resizable(False, False)
         
 class StopwatchModel:  # contains logic independently
     def __init__(self):
