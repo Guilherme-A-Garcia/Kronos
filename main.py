@@ -96,7 +96,8 @@ class StopwatchModel:  # contains logic independently
         pass
     
     # use f"{variable:02}" for 2 character minimum padding and 0 as padding
-    # come up with a way to count the ms and use divmod to divide it and store the tuple values in two variables (e.g.: seconds, ms)
+    # come up with a way to count the ms and use divmod to divide it and store the tuple values in two variables 
+    # (e.g.: divide by 1000 storing in seconds and ms)
 
 class TimerModel:  # contains logic independently
     def __init__(self):
