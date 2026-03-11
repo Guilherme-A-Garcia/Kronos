@@ -4,7 +4,7 @@
 ![GitHub release](https://img.shields.io/github/v/release/Guilherme-A-Garcia/Kronos)
 
 # Kronos
-Kronos is a Python timepiece utility tool.<br>
+Kronos is a simple Python timepiece utility tool with a nice GUI.<br>
 This application uses CustomTkinter and CTkMessagebox.<br>
 The available [binaries](https://github.com/Guilherme-A-Garcia/Kronos/releases) were compiled with [Nuitka](https://nuitka.net/).
 
