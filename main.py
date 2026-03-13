@@ -29,11 +29,11 @@ class WindowController:  # receives and manages views' calls and models
         
         def loop():
             if self.is_stopwatch_running:
-                self.current_iteration = time.perf_counter()
-                self.delta_time = self.current_iteration - self.last_iteration
-                self.last_iteration = self.current_iteration
+                current_iteration = time.perf_counter()
+                delta_time = current_iteration - self.last_iteration
+                self.last_iteration = current_iteration
                 
-                self.stopwatch_model.receive_time_units(self.delta_time)
+                self.stopwatch_model.receive_time_units(delta_time)
                 
                 self.current_window.after(0, lambda: self.current_window.stopwatch_counter_stringvar.set(self.stopwatch_model.process_time()))
                 
@@ -123,11 +123,11 @@ class StopwatchModel:  # contains logic independently
         self.time_units += value
     
     def process_time(self):
-        self.seconds = int(self.time_units)
-        self.centiseconds = int((self.time_units - self.seconds) * 100) % 100
-        self.minutes, self.seconds = divmod(self.seconds, 60)
-        self.hours, self.minutes = divmod(self.minutes, 60)
-        return f"{self.hours:02}:{self.minutes:02}:{self.seconds:02}.{self.centiseconds:02}"
+        seconds = int(self.time_units)
+        centiseconds = int((self.time_units - seconds) * 100) % 100
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        return f"{hours:02}:{minutes:02}:{seconds:02}.{centiseconds:02}"
 
 class TimerModel:  # contains logic independently
     def __init__(self):
