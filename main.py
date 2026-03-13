@@ -119,16 +119,14 @@ class StopwatchModel:  # contains logic independently
         self.time_units = 0
     
     def receive_time_units(self, value):
-        self.time_units = value
+        self.time_units += value
     
     def process_time(self):
         self.seconds = int(self.time_units)
-        self.centiseconds = int((self.time_units - self.seconds) * 100)
-        
-    
-    # use f"{variable:02}" for 2 character minimum padding and 0 as padding
-    # come up with a way to count the ms and use divmod to divide it and store the tuple values in two variables 
-    # (e.g.: divide by 1000 storing in seconds and ms)
+        self.centiseconds = int((self.time_units - self.seconds) * 100) % 100
+        self.minutes, self.seconds = divmod(self.seconds, 60)
+        self.hours, self.minutes = divmod(self.minutes, 60)
+        return f"{self.hours:02}:{self.minutes:02}:{self.seconds:02}.{self.centiseconds:02}"
 
 class TimerModel:  # contains logic independently
     def __init__(self):
