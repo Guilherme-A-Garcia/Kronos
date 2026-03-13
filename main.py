@@ -122,7 +122,8 @@ class StopwatchModel:  # contains logic independently
         self.time_units = value
     
     def process_time(self):
-        pass
+        self.seconds = int(self.time_units)
+        self.centiseconds = int((self.time_units - self.seconds) * 100)
         
     
     # use f"{variable:02}" for 2 character minimum padding and 0 as padding
