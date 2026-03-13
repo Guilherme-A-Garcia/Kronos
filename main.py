@@ -102,11 +102,11 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.stopwatch_button_frame.pack(pady=15)
         
         self.stopwatch_start = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Start", width=80, corner_radius=10, command=self.controller.start_stopwatch)
-        self.stopwatch_start.grid(row=0, column=0, sticky="nsew")
+        self.stopwatch_start.grid(row=0, column=1, sticky="nsew", padx=5)
     
         self.stopwatch_stop = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10, command=self.controller.stop_stopwatch)
         self.stopwatch_stop.configure(state="disabled")
-        self.stopwatch_stop.grid(row=0, column=1, sticky="nsew", padx=5)
+        self.stopwatch_stop.grid(row=0, column=0, sticky="nsew")
         
         self.stopwatch_reset = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10, command=self.controller.reset_stopwatch, state='disabled')
         self.stopwatch_reset.grid(row=0, column=2, sticky="nsew")
