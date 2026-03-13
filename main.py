@@ -35,7 +35,7 @@ class WindowController:  # receives and manages views' calls and models
                 
                 self.stopwatch_model.receive_time_units(self.delta_time)
                 
-                self.current_window.after(0, self.current_window.stopwatch_counter_stringvar.set(value=self.stopwatch_model.process_time()))
+                self.current_window.after(0, lambda: self.current_window.stopwatch_counter_stringvar.set(self.stopwatch_model.process_time()))
                 
                 self.root.after(10, loop)
             
