@@ -18,6 +18,9 @@ class WindowController:  # receives and manages views' calls and models
         
         self.show_stopwatch()
         
+    def start_stopwatch(self):
+        pass
+        
     def withdraw_current(self):
         if self.current_window is not None:
             self.current_window.withdraw()
@@ -93,7 +96,14 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         
 class StopwatchModel:  # contains logic independently
     def __init__(self):
+        self.time_units = 0
+    
+    def receive_time_units(self, value):
         pass
+    
+    def start(self):
+        pass
+        
     
     # use f"{variable:02}" for 2 character minimum padding and 0 as padding
     # come up with a way to count the ms and use divmod to divide it and store the tuple values in two variables 
