@@ -10,6 +10,9 @@ def main():
 class WindowController:  # receives and manages views' calls and models
     def __init__(self):
         self.current_window = None
+        self.stopwatch_elapsed_time = 0
+        self.is_stopwatch_running = False
+        
         self.root = ctk.CTk()
         self.root.withdraw()
         
@@ -19,7 +22,24 @@ class WindowController:  # receives and manages views' calls and models
         self.show_stopwatch()
         
     def start_stopwatch(self):
-        pass
+        if self.is_stopwatch_running:
+            return
+        
+        self.stopwatch_elapsed_time = 0
+        self.is_stopwatch_running = True
+        self.last_iteration = time.perf_counter()
+        
+        def loop(): # THIS LOOP IS CURRENTLY JUST SENDING DELTA TIME TO STOPWATCH MODEl FOR IT TO PROCESS IT <----
+            if self.is_stopwatch_running:
+                self.current_iteration = time.perf_counter()
+                self.delta_time = self.current_iteration - self.last_iteration
+                self.last_iteration = self.current_iteration
+                
+                self.stopwatch_model.receive_time_units(self.delta_time)
+                
+                self.root.after(10, loop)
+            
+        loop()
         
     def withdraw_current(self):
         if self.current_window is not None:
@@ -99,9 +119,9 @@ class StopwatchModel:  # contains logic independently
         self.time_units = 0
     
     def receive_time_units(self, value):
-        pass
+        self.time_units = value
     
-    def start(self):
+    def process_time(self):
         pass
         
     
