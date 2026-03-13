@@ -25,6 +25,8 @@ class WindowController:  # receives and manages views' calls and models
             return
         
         self.is_stopwatch_running = True
+        self.current_window.stopwatch_stop.configure(state='normal')
+        self.current_window.stopwatch_start.configure(state='disabled')
         self.last_iteration = time.perf_counter()
         
         def loop():
@@ -40,6 +42,12 @@ class WindowController:  # receives and manages views' calls and models
                 self.root.after(10, loop)
             
         loop()
+    
+    def stop_stopwatch(self):
+        if self.is_stopwatch_running:
+            self.is_stopwatch_running = False
+        self.current_window.stopwatch_stop.configure(state='disabled')
+        self.current_window.stopwatch_start.configure(state='normal')
         
     def withdraw_current(self):
         if self.current_window is not None:
@@ -88,7 +96,8 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.stopwatch_start = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Start", width=80, corner_radius=10, command=self.controller.start_stopwatch)
         self.stopwatch_start.grid(row=0, column=0, sticky="nsew")
     
-        self.stopwatch_stop = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10)
+        self.stopwatch_stop = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10, command=self.controller.stop_stopwatch)
+        self.stopwatch_stop.configure(state="disabled")
         self.stopwatch_stop.grid(row=0, column=1, sticky="nsew", padx=5)
         
         self.stopwatch_reset = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10)
