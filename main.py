@@ -10,7 +10,6 @@ def main():
 class WindowController:  # receives and manages views' calls and models
     def __init__(self):
         self.current_window = None
-        self.stopwatch_elapsed_time = 0
         self.is_stopwatch_running = False
         
         self.root = ctk.CTk()
@@ -25,17 +24,18 @@ class WindowController:  # receives and manages views' calls and models
         if self.is_stopwatch_running:
             return
         
-        self.stopwatch_elapsed_time = 0
         self.is_stopwatch_running = True
         self.last_iteration = time.perf_counter()
         
-        def loop(): # THIS LOOP IS CURRENTLY JUST SENDING DELTA TIME TO STOPWATCH MODEl FOR IT TO PROCESS IT <----
+        def loop():
             if self.is_stopwatch_running:
                 self.current_iteration = time.perf_counter()
                 self.delta_time = self.current_iteration - self.last_iteration
                 self.last_iteration = self.current_iteration
                 
                 self.stopwatch_model.receive_time_units(self.delta_time)
+                
+                self.current_window.after(0, self.current_window.stopwatch_counter_stringvar.set(value=self.stopwatch_model.process_time()))
                 
                 self.root.after(10, loop)
             
@@ -76,7 +76,8 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.stopwatch_counter_frame = ctk.CTkFrame(self, height=50, border_width=1, corner_radius=20)
         self.stopwatch_counter_frame.pack(anchor="center", fill='x', padx=100)
 
-        self.stopwatch_counter_label = ctk.CTkLabel(self.stopwatch_counter_frame, font=("", 28), text="00:00:00.00")
+        self.stopwatch_counter_stringvar = ctk.StringVar(value="00:00:00.00")
+        self.stopwatch_counter_label = ctk.CTkLabel(self.stopwatch_counter_frame, font=("", 28), textvariable=self.stopwatch_counter_stringvar)
         self.stopwatch_counter_label.pack(padx=2, pady=2)
         
         self.stopwatch_button_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -84,7 +85,7 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.stopwatch_button_frame.columnconfigure((0,1,2), weight=1)
         self.stopwatch_button_frame.pack(pady=15)
         
-        self.stopwatch_start = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Start", width=80, corner_radius=10)
+        self.stopwatch_start = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Start", width=80, corner_radius=10, command=self.controller.start_stopwatch)
         self.stopwatch_start.grid(row=0, column=0, sticky="nsew")
     
         self.stopwatch_stop = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10)
