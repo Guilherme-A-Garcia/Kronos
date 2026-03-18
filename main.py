@@ -127,16 +127,16 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.stopwatch_reset = ctk.CTkButton(self.stopwatch_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10, command=self.controller.reset_stopwatch, state='disabled')
         self.stopwatch_reset.grid(row=0, column=2, sticky="nsew")
         
-        self.stopwatch_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
-        self.stopwatch_swap_frame.rowconfigure(0, weight=1)
-        self.stopwatch_swap_frame.columnconfigure((0,1), weight=1)
-        self.stopwatch_swap_frame.pack(anchor="se", pady=15, padx=(0,10))
+        self.window_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
+        self.window_swap_frame.rowconfigure(0, weight=1)
+        self.window_swap_frame.columnconfigure((0,1), weight=1)
+        self.window_swap_frame.pack(anchor="se", pady=15, padx=(0,10))
         
-        self.swap_stopwatch_button = ctk.CTkButton(self.stopwatch_swap_frame, font=("", 13), text="Stopwatch", width=100, corner_radius=2, fg_color="gray")
+        self.swap_stopwatch_button = ctk.CTkButton(self.window_swap_frame, font=("", 13), text="Stopwatch", width=100, corner_radius=2, fg_color="gray")
         self.swap_stopwatch_button.configure(state="disabled")
         self.swap_stopwatch_button.grid(row=0, column=0, sticky="nsew")
         
-        self.swap_timer_button = ctk.CTkButton(self.stopwatch_swap_frame, font=("", 13), text="Timer", width=100, corner_radius=2, command=self.controller.show_timer)
+        self.swap_timer_button = ctk.CTkButton(self.window_swap_frame, font=("", 13), text="Timer", width=100, corner_radius=2, command=self.controller.show_timer)
         self.swap_timer_button.grid(row=0, column=1, sticky="nsew")
     
 class TimerView(ctk.CTkToplevel):  # contains UI
@@ -148,15 +148,15 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.geometry("450x250")
         self.resizable(False, False)
         
-        self.stopwatch_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
-        self.stopwatch_swap_frame.rowconfigure(0, weight=1)
-        self.stopwatch_swap_frame.columnconfigure((0,1), weight=1)
-        self.stopwatch_swap_frame.pack(anchor="se", pady=15, padx=(0,10))
+        self.window_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
+        self.window_swap_frame.rowconfigure(0, weight=1)
+        self.window_swap_frame.columnconfigure((0,1), weight=1)
+        self.window_swap_frame.pack(anchor="se", pady=15, padx=(0,10))
         
-        self.swap_stopwatch_button = ctk.CTkButton(self.stopwatch_swap_frame, font=("", 13), text="Stopwatch", width=100, corner_radius=2, command=self.controller.show_stopwatch)
+        self.swap_stopwatch_button = ctk.CTkButton(self.window_swap_frame, font=("", 13), text="Stopwatch", width=100, corner_radius=2, command=self.controller.show_stopwatch)
         self.swap_stopwatch_button.grid(row=0, column=0, sticky="nsew")
         
-        self.swap_timer_button = ctk.CTkButton(self.stopwatch_swap_frame, font=("", 13), text="Timer", width=100, corner_radius=2, state="disabled", fg_color="gray")
+        self.swap_timer_button = ctk.CTkButton(self.window_swap_frame, font=("", 13), text="Timer", width=100, corner_radius=2, state="disabled", fg_color="gray")
         self.swap_timer_button.grid(row=0, column=1, sticky="nsew")
         
 class StopwatchModel:  # contains logic independently
