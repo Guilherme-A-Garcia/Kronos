@@ -148,6 +148,50 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.geometry("450x250")
         self.resizable(False, False)
         
+        self.timer_label = ctk.CTkLabel(self, font=("", 40), text="Timer")
+        self.timer_label.pack(pady=15)
+        
+        self.timer_counter_frame = ctk.CTkFrame(self, height=50, border_width=1, corner_radius=20)
+        self.timer_counter_frame.rowconfigure(0, weight=1)
+        self.timer_counter_frame.columnconfigure(0, weight=1)
+        self.timer_counter_frame.columnconfigure(1, weight=0)
+        self.timer_counter_frame.columnconfigure(2, weight=1)
+        self.timer_counter_frame.columnconfigure(3, weight=0)
+        self.timer_counter_frame.columnconfigure(4, weight=1)
+        self.timer_counter_frame.pack(anchor="center", fill='x', padx=100)
+
+        self.timer_counter_stringvar = ctk.StringVar(value="00:00:00.00")
+        
+        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20)
+        self.timer_counter_hours.grid(padx=(20, 10), pady=2, column=0, row=0, sticky='nsew')
+        
+        self.hours_minutes_separation = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), text=":")
+        self.hours_minutes_separation.grid(padx=0, pady=2, column=1, row=0, sticky='e')
+        
+        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20)
+        self.timer_counter_minutes.grid(padx=15, pady=2, column=2, row=0, sticky='nsew')
+        
+        self.minutes_seconds_separation = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), text=":")
+        self.minutes_seconds_separation.grid(pady=2, column=3, row=0, sticky='w')
+        
+        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20)
+        self.timer_counter_seconds.grid(padx=(10, 20), pady=2, column=4, row=0, sticky='nsew')
+        
+        self.timer_button_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.timer_button_frame.rowconfigure(0, weight=1)
+        self.timer_button_frame.columnconfigure((0,1,2), weight=1)
+        self.timer_button_frame.pack(pady=15)
+        
+        self.timer_start = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Start", width=80, corner_radius=10)
+        self.timer_start.grid(row=0, column=1, sticky="nsew", padx=5)
+    
+        self.timer_stop = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10)
+        self.timer_stop.configure(state="disabled")
+        self.timer_stop.grid(row=0, column=0, sticky="nsew")
+        
+        self.timer_reset = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10, state='disabled')
+        self.timer_reset.grid(row=0, column=2, sticky="nsew")
+        
         self.window_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
         self.window_swap_frame.rowconfigure(0, weight=1)
         self.window_swap_frame.columnconfigure((0,1), weight=1)
