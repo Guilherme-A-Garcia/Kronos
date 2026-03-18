@@ -70,7 +70,7 @@ class WindowController:  # receives and manages views' calls and models
         self.current_window.protocol("WM_DELETE_WINDOW", self.on_close)
         
     def show_stopwatch(self):
-        if self.previous_window != self.current_window:
+        if self.previous_window is not self.current_window:
             self.show_previous()
         else:
             self.previous_window = self.current_window
@@ -78,7 +78,7 @@ class WindowController:  # receives and manages views' calls and models
     
     def show_timer(self):
         self.stop_stopwatch()
-        if self.previous_window != self.current_window:
+        if self.previous_window is not self.current_window:
             self.show_previous()
         else:
             self.previous_window = self.current_window
