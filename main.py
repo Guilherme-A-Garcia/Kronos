@@ -40,7 +40,11 @@ class WindowController:  # receives and manages views' calls and models
         self.current_window.timer_start.configure(state='normal')
     
     def reset_timer(self):
-        pass
+        stringvars = [(self.current_window.timer_hours_stringvar), (self.current_window.timer_minutes_stringvar), (self.current_window.timer_seconds_stringvar)]
+        self.stop_timer()
+        self.current_window.timer_reset.configure(state='disabled')
+        for stringvar in stringvars:
+            self.root.after(0, lambda stringvar=stringvar: stringvar.set(""))
         
     def start_stopwatch(self):
         if self.is_stopwatch_running:
@@ -179,21 +183,22 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.timer_counter_frame.columnconfigure(4, weight=1)
         self.timer_counter_frame.pack(anchor="center", fill='x', padx=100)
 
-        self.timer_counter_stringvar = ctk.StringVar(value="00:00:00.00")
-        
-        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='h', justify="center")
+        self.timer_hours_stringvar = ctk.StringVar()
+        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='h', justify="center", textvariable=self.timer_hours_stringvar)
         self.timer_counter_hours.grid(padx=(20, 10), pady=2, column=0, row=0, sticky='nsew')
         
         self.hours_minutes_separation = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), text=":")
         self.hours_minutes_separation.grid(padx=0, pady=2, column=1, row=0, sticky='e')
         
-        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='m', justify="center")
+        self.timer_minutes_stringvar = ctk.StringVar()
+        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='m', justify="center", textvariable=self.timer_minutes_stringvar)
         self.timer_counter_minutes.grid(padx=15, pady=2, column=2, row=0, sticky='nsew')
         
         self.minutes_seconds_separation = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), text=":")
         self.minutes_seconds_separation.grid(pady=2, column=3, row=0, sticky='w')
         
-        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='s', justify="center")
+        self.timer_seconds_stringvar = ctk.StringVar()
+        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='s', justify="center", textvariable=self.timer_seconds_stringvar)
         self.timer_counter_seconds.grid(padx=(10, 20), pady=2, column=4, row=0, sticky='nsew')
         
         self.timer_button_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -201,14 +206,13 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.timer_button_frame.columnconfigure((0,1,2), weight=1)
         self.timer_button_frame.pack(pady=15)
         
-        self.timer_start = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Start", width=80, corner_radius=10)
+        self.timer_start = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Start", width=80, corner_radius=10, command=self.controller.start_timer)
         self.timer_start.grid(row=0, column=1, sticky="nsew", padx=5)
     
-        self.timer_stop = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10)
-        self.timer_stop.configure(state="disabled")
+        self.timer_stop = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Stop", width=80, corner_radius=10, state="disabled", command=self.controller.stop_timer)
         self.timer_stop.grid(row=0, column=0, sticky="nsew")
         
-        self.timer_reset = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10, state='disabled')
+        self.timer_reset = ctk.CTkButton(self.timer_button_frame, font=("", 20), text="Reset", width=80, corner_radius=10, state='disabled', command=self.controller.reset_timer)
         self.timer_reset.grid(row=0, column=2, sticky="nsew")
         
         self.window_swap_frame = ctk.CTkFrame(self, width=80, border_width=1, corner_radius=50)
