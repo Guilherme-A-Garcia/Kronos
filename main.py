@@ -24,7 +24,14 @@ class WindowController:  # receives and manages views' calls and models
         self.previous_window = self.current_window
     
     def start_timer(self):
-        pass
+        if self.is_timer_running:
+            return
+        
+        self.is_timer_running = True
+        self.current_window.timer_stop.configure(state='normal')
+        self.current_window.timer_start.configure(state='disabled')
+        self.current_window.timer_reset.configure(state='normal')
+    
     
     def stop_timer(self):
         if self.is_timer_running:
