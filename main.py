@@ -21,6 +21,15 @@ class WindowController:  # receives and manages views' calls and models
         
         self.show_stopwatch()
         self.previous_window = self.current_window
+    
+    def start_timer(self):
+        pass
+    
+    def stop_timer(self):
+        pass
+    
+    def reset_timer(self):
+        pass
         
     def start_stopwatch(self):
         if self.is_stopwatch_running:
@@ -57,7 +66,6 @@ class WindowController:  # receives and manages views' calls and models
         self.current_window.stopwatch_reset.configure(state='disabled')
         self.stopwatch_model.reset_time_units()
         self.current_window.after(0, lambda: self.current_window.stopwatch_counter_stringvar.set("00:00:00.00"))
-        
         
     def withdraw_current(self):
         if self.current_window is not None:
@@ -162,19 +170,19 @@ class TimerView(ctk.CTkToplevel):  # contains UI
 
         self.timer_counter_stringvar = ctk.StringVar(value="00:00:00.00")
         
-        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20)
+        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='h', justify="center")
         self.timer_counter_hours.grid(padx=(20, 10), pady=2, column=0, row=0, sticky='nsew')
         
         self.hours_minutes_separation = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), text=":")
         self.hours_minutes_separation.grid(padx=0, pady=2, column=1, row=0, sticky='e')
         
-        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20)
+        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='m', justify="center")
         self.timer_counter_minutes.grid(padx=15, pady=2, column=2, row=0, sticky='nsew')
         
         self.minutes_seconds_separation = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), text=":")
         self.minutes_seconds_separation.grid(pady=2, column=3, row=0, sticky='w')
         
-        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20)
+        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='s', justify="center")
         self.timer_counter_seconds.grid(padx=(10, 20), pady=2, column=4, row=0, sticky='nsew')
         
         self.timer_button_frame = ctk.CTkFrame(self, fg_color="transparent")
