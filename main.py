@@ -12,6 +12,7 @@ class WindowController:  # receives and manages views' calls and models
         self.previous_window = None
         self.current_window = None
         self.is_stopwatch_running = False
+        self.is_timer_running = False
         
         self.root = ctk.CTk()
         self.root.withdraw()
@@ -26,7 +27,10 @@ class WindowController:  # receives and manages views' calls and models
         pass
     
     def stop_timer(self):
-        pass
+        if self.is_timer_running:
+            self.is_timer_running = False
+        self.current_window.timer_stop.configure(state='disabled')
+        self.current_window.timer_start.configure(state='normal')
     
     def reset_timer(self):
         pass
