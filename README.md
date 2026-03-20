@@ -1,6 +1,6 @@
 ![Python](https://img.shields.io/badge/python-3.9+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Linux](https://img.shields.io/badge/platforms-Linux|Windows-blue)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20|%20Linux-blue)
 ![GitHub release](https://img.shields.io/github/v/release/Guilherme-A-Garcia/Kronos)
 
 # Kronos
