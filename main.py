@@ -243,6 +243,8 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.swap_timer_button = ctk.CTkButton(self.window_swap_frame, font=("", 13), text="Timer", width=100, corner_radius=2, state="disabled", fg_color="gray")
         self.swap_timer_button.grid(row=0, column=1, sticky="nsew")
         
+        self.entries = [(self.timer_counter_hours), (self.timer_counter_minutes), (self.timer_counter_seconds)]
+        
     def timer_hours_handler_in(self, event):
         if self.timer_counter_hours.get() == 'h':
             self.timer_counter_hours.delete(0, ctk.END)
