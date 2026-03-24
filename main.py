@@ -308,7 +308,9 @@ class TimerModel:  # contains logic independently
     
     def get_remaining_time(self):
         pass
-
+    
+    def detract_remaining_time(self):
+        pass
     
 if __name__ == "__main__":
     main()
