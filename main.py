@@ -300,17 +300,26 @@ class TimerModel:  # contains logic independently
         self.timer_min = 0
         self.timer_sec = 0
         
-    def receive_timer_counter(self):
-        pass
-    
+    def receive_timer_counter(self, hour, minutes, sec):
+        self.timer_hour = hour
+        self.timer_min = minutes
+        self.timer_sec = sec
+        self.remaining_time = self.timer_hour * 3600 + self.timer_min * 60 + self.timer_sec
+
     def timer_process_time(self):
-        pass
+        total_seconds = max(int(self.remaining_time), 0)
+        hours, remainder = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
     
     def get_remaining_time(self):
-        pass
+        return self.remaining_time
     
-    def detract_remaining_time(self):
-        pass
+    def detract_remaining_time(self, value):
+        if value > 0:
+            self.remaining_time -= value
+            if self.remaining_time < 0:
+                self.remaining_time = 0
     
 if __name__ == "__main__":
     main()
