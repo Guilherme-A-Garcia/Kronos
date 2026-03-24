@@ -7,6 +7,10 @@ def main():
     app = WindowController()
     app.root.mainloop()
 
+def err_msg(master, msg):
+    error = CTkMessagebox(master=master, icon='cancel', message=msg)
+    error.get()
+
 class WindowController:  # receives and manages views' calls and models
     def __init__(self):
         self.previous_window = None
