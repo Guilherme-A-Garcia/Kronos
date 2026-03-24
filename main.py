@@ -32,15 +32,66 @@ class WindowController:  # receives and manages views' calls and models
         if self.is_timer_running:
             return
         
+        if all(not entry.get().strip() for entry in self.current_window.entries) or all(entry.get().strip() in ('h', 'm', 's') for entry in self.current_window.entries):
+            err_msg(master=self.current_window, msg='Error: Please enter a number in at least one field.')
+            self.reset_timer()
+            return
+        
+        for entry in self.current_window.entries:
+            if entry.get().strip() not in ('h', 'm', 's') and not entry.get().strip().isdigit():
+                err_msg(master=self.current_window, msg='Error: Enter valid numbers.')
+                self.reset_timer()
+                return
+            
         self.is_timer_running = True
         self.current_window.timer_stop.configure(state='normal')
         self.current_window.timer_start.configure(state='disabled')
         self.current_window.timer_reset.configure(state='normal')
-    
+        
+        for entry in self.current_window.entries:
+            self.current_window.after(0, lambda entry=entry: entry.grid_forget())
+        
+        self.current_window.after(0, self.current_window.minutes_seconds_separation.grid_forget)
+        self.current_window.after(0, self.current_window.hours_minutes_separation.grid_forget)
+            
+        self.current_window.timer_counter_label.grid(padx=2, pady=2, row=0, column=2)
+        
+        hours = int(self.current_window.entries[0].get() if self.current_window.entries[0].get() != 'h' else '0')
+            
+        minutes = int(self.current_window.entries[1].get() if self.current_window.entries[1].get() != 'm' else '0')
+        
+        seconds = int(self.current_window.entries[2].get() if self.current_window.entries[2].get() != 's' else '0')
+        
+        if (hours, minutes, seconds) == (0, 0, 0):
+            err_msg(master=self.current_window, msg='Error: Enter numbers bigger than zero.')
+            self.reset_timer()
+            return
+        
+        self.last_timer_iteration = time.perf_counter()
+        
+        if self.timer_first_run:
+            self.timer_model.receive_timer_counter(hour=hours, minutes=minutes, sec=seconds)
+                
+        def loop():
+            remaining = self.timer_model.get_remaining_time()
+            if self.is_timer_running and remaining > 0:
+                current_timer_iteration = time.perf_counter()
+                timer_delta_time = current_timer_iteration - self.last_timer_iteration
+                self.last_timer_iteration = current_timer_iteration
+                
+                self.timer_model.timer_process_time()
+                self.current_window.after(0, lambda: self.current_window.timer_counter_label_strvar.set(value=self.timer_model.timer_process_time()))
+                self.timer_model.detract_remaining_time(timer_delta_time)
+
+                self.current_window.after(10, loop)
+        
+        self.timer_first_run = False
+        loop()
     
     def stop_timer(self):
         if self.is_timer_running:
             self.is_timer_running = False
+        
         self.current_window.timer_stop.configure(state='disabled')
         self.current_window.timer_start.configure(state='normal')
     
