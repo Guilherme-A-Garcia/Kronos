@@ -17,6 +17,7 @@ class WindowController:  # receives and manages views' calls and models
         self.current_window = None
         self.is_stopwatch_running = False
         self.is_timer_running = False
+        self.timer_first_run = True
         
         self.root = ctk.CTk()
         self.root.withdraw()
@@ -44,13 +45,24 @@ class WindowController:  # receives and manages views' calls and models
         self.current_window.timer_start.configure(state='normal')
     
     def reset_timer(self):
+        self.timer_first_run = True
         stringvars = [(self.current_window.timer_hours_stringvar, 'h'), (self.current_window.timer_minutes_stringvar, 'm'), (self.current_window.timer_seconds_stringvar, 's')]
-        entries = [(self.current_window.timer_counter_hours),(self.current_window.timer_counter_minutes),(self.current_window.timer_counter_seconds)]
         self.stop_timer()
         self.current_window.timer_reset.configure(state='disabled')
+
+        self.current_window.entries[0].grid(padx=(20, 10), pady=2, column=0, row=0, sticky='nsew')
+        self.current_window.entries[1].grid(padx=15, pady=2, column=2, row=0, sticky='nsew')
+        self.current_window.entries[2].grid(padx=(10, 20), pady=2, column=4, row=0, sticky='nsew')
+
+        self.current_window.minutes_seconds_separation.grid(pady=2, column=3, row=0, sticky='w')
+        self.current_window.hours_minutes_separation.grid(padx=0, pady=2, column=1, row=0, sticky='e')
+
+        self.current_window.timer_counter_label.grid_forget()
+
         for stringvar, val in stringvars:
             self.current_window.after(0, lambda stringvar=stringvar, val=val: stringvar.set(val))
-        for entry in entries:
+            
+        for entry in self.current_window.entries:
             self.current_window.after(0, lambda entry=entry: entry.configure(text_color='gray'))
         
     def start_stopwatch(self):
