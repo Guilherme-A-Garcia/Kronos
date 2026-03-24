@@ -190,6 +190,9 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.timer_counter_frame.columnconfigure(3, weight=0)
         self.timer_counter_frame.columnconfigure(4, weight=1)
         self.timer_counter_frame.pack(anchor="center", fill='x', padx=100)
+        
+        self.timer_counter_label_strvar = ctk.StringVar(value="")
+        self.timer_counter_label = ctk.CTkLabel(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", textvariable=self.timer_counter_label_strvar)
 
         self.timer_hours_stringvar = ctk.StringVar()
         self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='h', justify="center", text_color='gray', textvariable=self.timer_hours_stringvar)
