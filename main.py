@@ -40,11 +40,14 @@ class WindowController:  # receives and manages views' calls and models
         self.current_window.timer_start.configure(state='normal')
     
     def reset_timer(self):
-        stringvars = [(self.current_window.timer_hours_stringvar), (self.current_window.timer_minutes_stringvar), (self.current_window.timer_seconds_stringvar)]
+        stringvars = [(self.current_window.timer_hours_stringvar, 'h'), (self.current_window.timer_minutes_stringvar, 'm'), (self.current_window.timer_seconds_stringvar, 's')]
+        entries = [(self.current_window.timer_counter_hours),(self.current_window.timer_counter_minutes),(self.current_window.timer_counter_seconds)]
         self.stop_timer()
         self.current_window.timer_reset.configure(state='disabled')
-        for stringvar in stringvars:
-            self.root.after(0, lambda stringvar=stringvar: stringvar.set(""))
+        for stringvar, val in stringvars:
+            self.current_window.after(0, lambda stringvar=stringvar, val=val: stringvar.set(val))
+        for entry in entries:
+            self.current_window.after(0, lambda entry=entry: entry.configure(text_color='gray'))
         
     def start_stopwatch(self):
         if self.is_stopwatch_running:
