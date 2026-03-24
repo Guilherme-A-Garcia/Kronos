@@ -370,7 +370,7 @@ class TimerModel:  # contains logic independently
     def receive_timer_counter(self, hour, minutes, sec):
         self.timer_hour = hour
         self.timer_min = minutes
-        self.timer_sec = sec
+        self.timer_sec = sec +1
         self.remaining_time = self.timer_hour * 3600 + self.timer_min * 60 + self.timer_sec
 
     def timer_process_time(self):
