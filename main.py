@@ -21,6 +21,9 @@ def dynamic_resolution(d_root, d_width, d_height):
     y = (screen_height // 2) - (d_height // 2)
     d_root.geometry(f"{d_width}x{d_height}+{x}+{y}")
 
+def isWindows():
+    return sys.platform.startswith('nt')
+
 class WindowController:  # receives and manages views' calls and models
     def __init__(self):
         self.previous_window = None
