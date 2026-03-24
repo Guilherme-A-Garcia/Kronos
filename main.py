@@ -11,6 +11,13 @@ def err_msg(master, msg):
     error = CTkMessagebox(master=master, icon='cancel', message=msg)
     error.get()
 
+def dynamic_resolution(d_root, d_width, d_height):
+    screen_height = d_root.winfo_screenheight()
+    screen_width = d_root.winfo_screenwidth()
+    x = (screen_width // 2) - (d_width // 2)
+    y = (screen_height // 2) - (d_height // 2)
+    d_root.geometry(f"{d_width}x{d_height}+{x}+{y}")
+
 class WindowController:  # receives and manages views' calls and models
     def __init__(self):
         self.previous_window = None
@@ -194,7 +201,7 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.controller = controller
         
         self.title("Kronos")
-        self.geometry("450x250")
+        dynamic_resolution(self, 450, 250)
         self.resizable(False, False)
 
         self.stopwatch_label = ctk.CTkLabel(self, font=("", 40), text="Stopwatch")
@@ -240,7 +247,7 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.controller = controller
         
         self.title("Kronos")
-        self.geometry("450x250")
+        dynamic_resolution(self, 450, 250)
         self.resizable(False, False)
         
         self.timer_label = ctk.CTkLabel(self, font=("", 40), text="Timer")
