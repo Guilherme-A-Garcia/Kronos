@@ -91,6 +91,7 @@ class WindowController:  # receives and manages views' calls and models
         self.withdraw_current()
         self.current_window = window_class(self)
         self.current_window.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.current_window.bind("<Button-1>", lambda e: e.widget.focus())
         
     def show_stopwatch(self):
         if self.previous_window is not self.current_window:
@@ -184,7 +185,8 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.timer_counter_frame.pack(anchor="center", fill='x', padx=100)
 
         self.timer_hours_stringvar = ctk.StringVar()
-        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='h', justify="center", textvariable=self.timer_hours_stringvar)
+        self.timer_counter_hours = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='h', justify="center", text_color='gray', textvariable=self.timer_hours_stringvar)
+        self.timer_counter_hours.insert(0, 'h')
         self.timer_counter_hours.grid(padx=(20, 10), pady=2, column=0, row=0, sticky='nsew')
         self.timer_counter_hours.bind("<FocusIn>", self.timer_hours_handler_in)
         self.timer_counter_hours.bind("<FocusOut>", self.timer_hours_handler_out)
@@ -193,7 +195,8 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.hours_minutes_separation.grid(padx=0, pady=2, column=1, row=0, sticky='e')
         
         self.timer_minutes_stringvar = ctk.StringVar()
-        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='m', justify="center", textvariable=self.timer_minutes_stringvar)
+        self.timer_counter_minutes = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='m', justify="center", text_color='gray', textvariable=self.timer_minutes_stringvar)
+        self.timer_counter_minutes.insert(0, 'm')
         self.timer_counter_minutes.grid(padx=15, pady=2, column=2, row=0, sticky='nsew')
         self.timer_counter_minutes.bind("<FocusIn>", self.timer_minutes_handler_in)
         self.timer_counter_minutes.bind("<FocusOut>", self.timer_minutes_handler_out)
@@ -202,7 +205,8 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.minutes_seconds_separation.grid(pady=2, column=3, row=0, sticky='w')
         
         self.timer_seconds_stringvar = ctk.StringVar()
-        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='s', justify="center", textvariable=self.timer_seconds_stringvar)
+        self.timer_counter_seconds = ctk.CTkEntry(self.timer_counter_frame, font=("", 25), fg_color="transparent", bg_color="transparent", border_width=1, width=20, placeholder_text='s', justify="center", text_color='gray', textvariable=self.timer_seconds_stringvar)
+        self.timer_counter_seconds.insert(0, 's')
         self.timer_counter_seconds.grid(padx=(10, 20), pady=2, column=4, row=0, sticky='nsew')
         self.timer_counter_seconds.bind("<FocusIn>", self.timer_seconds_handler_in)
         self.timer_counter_seconds.bind("<FocusOut>", self.timer_seconds_handler_out)
@@ -233,22 +237,34 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.swap_timer_button.grid(row=0, column=1, sticky="nsew")
         
     def timer_hours_handler_in(self, event):
-        print('hours')
-        
+        if self.timer_counter_hours.get() == 'h':
+            self.timer_counter_hours.delete(0, ctk.END)
+            self.timer_counter_hours.configure(text_color='white')
+                
     def timer_minutes_handler_in(self, event):
-        print('minutes')
+        if self.timer_counter_minutes.get() == 'm':
+            self.timer_counter_minutes.delete(0, ctk.END)
+            self.timer_counter_minutes.configure(text_color='white')
         
     def timer_seconds_handler_in(self, event):
-        print('seconds')
+        if self.timer_counter_seconds.get() == 's':
+            self.timer_counter_seconds.delete(0, ctk.END)
+            self.timer_counter_seconds.configure(text_color='white')
         
     def timer_hours_handler_out(self, event):
-        print('hours unfocused')
+        if self.timer_counter_hours.get().strip() == '':
+            self.timer_counter_hours.configure(text_color='gray')
+            self.timer_counter_hours.insert(0, 'h')
 
     def timer_minutes_handler_out(self, event):
-        print('minutes unfocused')
+        if self.timer_counter_minutes.get().strip() == '':
+            self.timer_counter_minutes.configure(text_color='gray')
+            self.timer_counter_minutes.insert(0, 'm')
 
     def timer_seconds_handler_out(self, event):
-        print('seconds unfocused')
+        if self.timer_counter_seconds.get().strip() == '':
+            self.timer_counter_seconds.configure(text_color='gray')
+            self.timer_counter_seconds.insert(0, 's')
         
 class StopwatchModel:  # contains logic independently
     def __init__(self):
