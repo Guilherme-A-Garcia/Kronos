@@ -102,6 +102,7 @@ class WindowController:  # receives and manages views' calls and models
         
     def show_stopwatch(self):
         if self.previous_window is not self.current_window:
+            self.stop_timer()
             self.show_previous()
         else:
             self.previous_window = self.current_window
