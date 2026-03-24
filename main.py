@@ -295,6 +295,12 @@ class StopwatchModel:  # contains logic independently
 
 class TimerModel:  # contains logic independently
     def __init__(self):
+        self.remaining_time = 0
+        self.timer_hour = 0
+        self.timer_min = 0
+        self.timer_sec = 0
+        
+    def receive_timer_counter(self):
         pass
     
 if __name__ == "__main__":
