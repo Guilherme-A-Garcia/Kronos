@@ -239,7 +239,7 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.title("Kronos")
         dynamic_resolution(self, 450, 250)
         self.resizable(False, False)
-        set_window_icon(self)
+        self.after(200, lambda: set_window_icon(self))
 
         self.stopwatch_label = ctk.CTkLabel(self, font=("", 40), text="Stopwatch")
         self.stopwatch_label.pack(pady=15)
@@ -288,7 +288,7 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.title("Kronos")
         dynamic_resolution(self, 450, 250)
         self.resizable(False, False)
-        set_window_icon(self)
+        self.after(200, lambda: set_window_icon(self))
         
         self.timer_label = ctk.CTkLabel(self, font=("", 40), text="Timer")
         self.timer_label.pack(pady=15)
