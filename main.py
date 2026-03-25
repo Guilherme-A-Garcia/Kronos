@@ -84,6 +84,12 @@ class WindowController:  # receives and manages views' calls and models
     def auto_update_thread(self):
         pass
     
+    def update_app(self):
+        pass
+    
+    def get_app_dir(self):
+        pass
+    
     def start_timer(self):
         if self.is_timer_running:
             return
