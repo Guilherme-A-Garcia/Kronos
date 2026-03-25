@@ -10,15 +10,16 @@ The available [binaries](https://github.com/Guilherme-A-Garcia/Kronos/releases) 
 
 ## Table of Contents
 <!-- - [Roadmap](#roadmap)-->
-<!-- - [Preview](#preview)-->
+- [Preview](#preview)
 - [Current Features](#current-features)
 - [Requirements](#requirements)
 - [How to Use](#how-to-use)
 - [Using the Source Code](#using-the-source-code)
 - [How to Contribute](#how-to-contribute)
 
-<!--## Preview
-![Main interface](assets/previews/Main.png)-->
+## Preview
+![Stopwatch](assets/preview/Stopwatch.png)
+![Timer](assets/preview/Timer.png)
 
 ## Current Features
 - Intuitive and sleek interface
