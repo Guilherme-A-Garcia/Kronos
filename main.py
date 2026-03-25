@@ -31,34 +31,40 @@ def dynamic_resolution(d_root, d_width, d_height):
     y = (screen_height // 2) - (d_height // 2)
     d_root.geometry(f"{d_width}x{d_height}+{x}+{y}")
 
-def grab_icon(icon:str):
-    try:
-        if getattr(sys, 'frozen', False):
-            icon_path = os.path.join(os.path.dirname(sys.executable), icon)
-            if not os.path.exists(icon_path):
-                icon_path = os.path.join(os.getcwd(), icon)
-        else:
-            icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), icon)
-        return icon_path
-    except Exception:
-        pass
-
 def set_window_icon(root):
+    """Runtime icon loading for Nuitka"""
+    def win_set_icon():
+        try:
+            root.iconbitmap(icon_path)
+        except Exception as e:
+            print(f"Failed setting delayed icon: {e}")
+    
     try:
-        if isWindows():
-            icon_path = grab_icon('icon.ico')
-
-            if os.path.exists(icon_path):
-                root.after(150, root.iconbitmap(icon_path))
-        else:
-            icon_path = grab_icon('icon.png')
+        if isLinux():
+            if getattr(sys, 'frozen', False):
+                icon_path = os.path.join(os.path.dirname(sys.executable), 'icon.png')
+                if not os.path.exists(icon_path):
+                    icon_path = os.path.join(os.getcwd(), 'icon.png')
+            else:
+                icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'icon.png')
             
             if os.path.exists(icon_path):
                 pil_img = Image.open(icon_path).convert("RGBA")
                 imagetk = ImageTk.PhotoImage(pil_img)
-                root.iconphoto(False, imagetk)
-    except Exception:
-        pass
+                root.after(300, root.iconphoto(False, imagetk))
+
+        else:
+            if getattr(sys, 'frozen', False):
+                icon_path = os.path.join(os.path.dirname(sys.executable), 'icon.ico')
+                if not os.path.exists(icon_path):
+                    icon_path = os.path.join(os.getcwd(), 'icon.ico')
+            else:
+                icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'icon.ico')
+        
+            if os.path.exists(icon_path):
+                root.after(300, win_set_icon)
+    except Exception as e:
+        print(f"Error, icon not available: {e}")
 
 class WindowController:  # receives and manages views' calls and models
     CURRENT_VERSION = "v1.1.0"
