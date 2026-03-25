@@ -264,7 +264,8 @@ class WindowController:  # receives and manages views' calls and models
             self.show_window(TimerView)
 
     def show_updating_window(self):
-        pass
+        self.withdraw_current()
+        self.current_window = UpdatingWindow(self)
 
     def show_previous(self):
         self.withdraw_current()
