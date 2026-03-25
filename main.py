@@ -98,8 +98,31 @@ class WindowController:  # receives and manages views' calls and models
         pass
     
     def update_app(self):
-        pass
-    
+        url = ''
+        file_path = ''
+        cwd = self.get_app_dir()
+        
+        print(f"Resolved update directory: {cwd}")
+        
+        if os.path.exists(cwd):
+            if is_linux:
+                url = 'https://github/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos-x86_64.AppImage'
+                file_path = os.path.join(cwd, 'Kronos-NEW-x86_64.AppImage')
+            else:
+                url = 'https://github/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos.exe'
+                file_path = os.path.join(cwd, 'Kronos-NEW.exe')
+            
+            print(f'Downloading to: {file_path}')
+
+            try:
+                urllib.request.urlretrieve(url, file_path)
+            except Exception as e:
+                err_msg(master=self.current_window, msg=f"An error occurred while downloading the update, the application will now close: {e}")
+                self.root.destroy()
+
+            success_msg = CTkMessagebox(master=self.current_window, title='Success', message="Update finished successfully. Closing application...", icon="check", option_focus=1, button_color="#950808", button_hover_color="#630202")
+            self.close_and_rename()
+
     def get_app_dir(self):
         if hasattr(sys, 'frozen', False):
             try:
