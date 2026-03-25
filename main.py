@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from bs4 import BeautifulSoup
 import customtkinter as ctk
 import urllib.request
+import subprocess
 import threading
 import requests
 import time
@@ -280,7 +281,31 @@ class WindowController:  # receives and manages views' calls and models
             self.root.destroy()
 
     def close_and_rename(self):
-        pass
+        if is_linux():
+            new_file = 'Kronos-x86_64-NEW.AppImage'
+            file_name = 'Kronos-x86_64.AppImage'
+            
+            cmd = ['sh', '-c', f'(sleep 1; mv "{new_file}" "{file_name}"; chmod +x "{file_name}"; exec "{os.path.abspath(file_name)}") >/dev/null 2>&1']
+            
+            subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stdin=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True, close_fds=True)
+            os._exit(0)
+        else:
+            cwd = self.get_app_dir()
+            
+            new_file = 'Kronos-NEW.exe'
+            file_name = 'Kronos.exe'
+            
+            new_file_abs = os.path.join(cwd, new_file)
+            file_name_abs = os.path.join(cwd, file_name)
+            
+            os.system(f'start /b cmd /c "timeout /nobreak > nul 2 & move /y "{new_file_abs}" "{file_name_abs}" >nul 2>&1 &"')
+            os._exit(0)
+            os.system('exit')
+            
+        if self.current_window is not None:
+            self.current_window.destroy()
+        self.root.destroy()
+        sys.exit()
 
 class StopwatchView(ctk.CTkToplevel):  # contains UI
     def __init__(self, controller):
