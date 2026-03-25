@@ -51,7 +51,7 @@ def set_window_icon(root):
             if os.path.exists(icon_path):
                 pil_img = Image.open(icon_path).convert("RGBA")
                 imagetk = ImageTk.PhotoImage(pil_img)
-                root.after(300, root.iconphoto(False, imagetk))
+                root.iconphoto(False, imagetk)
 
         else:
             if getattr(sys, 'frozen', False):
@@ -381,7 +381,11 @@ class StopwatchView(ctk.CTkToplevel):  # contains UI
         self.title("Kronos")
         dynamic_resolution(self, 450, 250)
         self.resizable(False, False)
-        self.after(200, lambda: set_window_icon(self))
+        
+        if isLinux():
+            set_window_icon(self)
+        else:
+            self.after(200, lambda: set_window_icon(self))
 
         self.stopwatch_label = ctk.CTkLabel(self, font=("", 40), text="Stopwatch")
         self.stopwatch_label.pack(pady=15)
@@ -430,7 +434,11 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         self.title("Kronos")
         dynamic_resolution(self, 450, 250)
         self.resizable(False, False)
-        self.after(200, lambda: set_window_icon(self))
+
+        if isLinux():
+            set_window_icon(self)
+        else:
+            self.after(200, lambda: set_window_icon(self))
         
         self.timer_label = ctk.CTkLabel(self, font=("", 40), text="Timer")
         self.timer_label.pack(pady=15)
