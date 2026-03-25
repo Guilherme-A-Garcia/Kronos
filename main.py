@@ -128,7 +128,7 @@ class WindowController:  # receives and manages views' calls and models
         if os.path.exists(cwd):
             if is_linux:
                 url = 'https://github.com/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos-x86_64.AppImage'
-                file_path = os.path.join(cwd, 'Kronos-NEW-x86_64.AppImage')
+                file_path = os.path.join(cwd, 'Kronos-x86_64-NEW.AppImage')
             else:
                 url = 'https://github.com/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos.exe'
                 file_path = os.path.join(cwd, 'Kronos-NEW.exe')
@@ -142,6 +142,7 @@ class WindowController:  # receives and manages views' calls and models
                 self.root.destroy()
 
             success_msg = CTkMessagebox(master=self.current_window, title='Success', message="Update finished successfully. Closing application...", icon="check", option_focus=1, button_color="#950808", button_hover_color="#630202")
+            success_msg.get()
             self.close_and_rename()
 
     def get_app_dir(self):
