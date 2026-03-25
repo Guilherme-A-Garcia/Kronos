@@ -127,10 +127,10 @@ class WindowController:  # receives and manages views' calls and models
         
         if os.path.exists(cwd):
             if is_linux:
-                url = 'https://github/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos-x86_64.AppImage'
+                url = 'https://github.com/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos-x86_64.AppImage'
                 file_path = os.path.join(cwd, 'Kronos-NEW-x86_64.AppImage')
             else:
-                url = 'https://github/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos.exe'
+                url = 'https://github.com/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos.exe'
                 file_path = os.path.join(cwd, 'Kronos-NEW.exe')
             
             print(f'Downloading to: {file_path}')
@@ -145,7 +145,7 @@ class WindowController:  # receives and manages views' calls and models
             self.close_and_rename()
 
     def get_app_dir(self):
-        if hasattr(sys, 'frozen', False):
+        if getattr(sys, 'frozen', False):
             try:
                 path = os.path.abspath(sys.argv[0])
                 dir_path = os.path.abspath(path)
