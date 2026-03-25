@@ -13,6 +13,9 @@ def main():
     app = WindowController()
     app.root.mainloop()
 
+def is_linux():
+    return sys.platform.startswith('linux')
+
 def err_msg(master, msg):
     error = CTkMessagebox(master=master, icon='cancel', message=msg, option_focus=1, button_color="#950808", button_hover_color="#630202")
     error.get()
