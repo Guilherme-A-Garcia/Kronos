@@ -323,6 +323,11 @@ class WindowController:  # receives and manages views' calls and models
             self.show_window(TimerView)
 
     def show_updating_window(self):
+        if hasattr(self.current_window, 'stopwatch_label'):
+            self.stop_stopwatch()
+        if hasattr(self.current_window, 'timer_label'):
+            self.stop_timer()
+            
         self.withdraw_current()
         self.current_window = UpdatingWindow(self)
 
