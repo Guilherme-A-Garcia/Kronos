@@ -82,7 +82,17 @@ class WindowController:  # receives and manages views' calls and models
         self.fetch_git_version()
     
     def fetch_git_version(self):
-        pass
+        try:
+            url = "https://github.com/Guilherme-A-Garcia/Kronos/releases/latest"
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            git_version = soup.find('span', class_='css-truncate-target').text.strip()
+            print(f"GitHub located version: {git_version}")
+            
+            if git_version != WindowController.CURRENT_VERSION:
+                self.different_version = True
+        except Exception as e:
+            print(f"Error locating the GitHub version: {e}")
     
     def auto_update_thread(self):
         pass
