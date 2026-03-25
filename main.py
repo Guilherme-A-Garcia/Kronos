@@ -79,7 +79,7 @@ class WindowController:  # receives and manages views' calls and models
         self.show_stopwatch()
         self.previous_window = self.current_window
         
-        self.fetch_git_version()
+        self.auto_update_thread()
     
     def fetch_git_version(self):
         try:
