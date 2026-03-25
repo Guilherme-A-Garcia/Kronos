@@ -95,7 +95,28 @@ class WindowController:  # receives and manages views' calls and models
             print(f"Error locating the GitHub version: {e}")
     
     def auto_update_thread(self):
-        pass
+        def update_thread(inputted_thread):
+            if inputted_thread.isalive():
+                self.current_window.after(10, lambda: update_thread(inputted_thread))
+            else:
+                print(f"Thread ({inputted_thread}) finished successfully!")
+                if inputted_thread == self.thread1:
+                    check_update()
+                    
+            self.thread1 = threading.Thread(target=self.fetch_git_version)
+            self.thread1.star()
+            update_thread(self.thread1)
+            
+            def check_update():
+                if self.different_version:
+                    msg = CTkMessagebox(message="A newer version has been detected, would you like to update the app?", option_1='Yes', option_2='No', option_focus=2, button_color="#950808", button_hover_color="#630202")
+                    if msg.get() == 'Yes':
+                        self.show_updating_window()
+                        self.thread2 = threading.Thread(target=self.update_app)
+                        self.thread2.start()
+                        update_thread(self.thread2)
+                else:
+                    return
     
     def update_app(self):
         url = ''
