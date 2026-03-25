@@ -58,6 +58,7 @@ def set_window_icon(root):
         pass
 
 class WindowController:  # receives and manages views' calls and models
+    CURRENT_VERSION = "v1.2.0"
     def __init__(self):
         self.previous_window = None
         self.current_window = None
