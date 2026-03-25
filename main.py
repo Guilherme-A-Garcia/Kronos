@@ -14,8 +14,11 @@ def main():
     app = WindowController()
     app.root.mainloop()
 
-def is_linux():
+def isLinux():
     return sys.platform.startswith('linux')
+
+def isWindows():
+    return sys.platform.startswith('nt')
 
 def err_msg(master, msg):
     error = CTkMessagebox(master=master, icon='cancel', message=msg, option_focus=1, button_color="#950808", button_hover_color="#630202")
@@ -27,9 +30,6 @@ def dynamic_resolution(d_root, d_width, d_height):
     x = (screen_width // 2) - (d_width // 2)
     y = (screen_height // 2) - (d_height // 2)
     d_root.geometry(f"{d_width}x{d_height}+{x}+{y}")
-
-def isWindows():
-    return sys.platform.startswith('nt')
 
 def grab_icon(icon:str):
     try:
@@ -126,7 +126,7 @@ class WindowController:  # receives and manages views' calls and models
         print(f"Resolved update directory: {cwd}")
         
         if os.path.exists(cwd):
-            if is_linux:
+            if isLinux():
                 url = 'https://github.com/Guilherme-A-Garcia/Kronos/releases/latest/download/Kronos-x86_64.AppImage'
                 file_path = os.path.join(cwd, 'Kronos-x86_64-NEW.AppImage')
             else:
@@ -341,7 +341,7 @@ class WindowController:  # receives and manages views' calls and models
             self.root.destroy()
 
     def close_and_rename(self):
-        if is_linux():
+        if isLinux():
             new_file = 'Kronos-x86_64-NEW.AppImage'
             file_name = 'Kronos-x86_64.AppImage'
             
