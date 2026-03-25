@@ -329,7 +329,7 @@ class WindowController:  # receives and manages views' calls and models
             self.stop_timer()
             
         self.withdraw_current()
-        self.current_window = UpdatingWindow(self)
+        self.current_window = UpdatingView(self)
 
     def show_previous(self):
         self.withdraw_current()
@@ -525,7 +525,7 @@ class TimerView(ctk.CTkToplevel):  # contains UI
             self.timer_counter_seconds.configure(text_color='gray')
             self.timer_counter_seconds.insert(0, 's')
 
-class UpdatingWindow(ctk.CTkToplevel):
+class UpdatingView(ctk.CTkToplevel):
     def __init__(self, app):
         super().__init__(app.root)
         self.app = app
