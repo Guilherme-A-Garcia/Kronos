@@ -60,6 +60,7 @@ def set_window_icon(root):
 class WindowController:  # receives and manages views' calls and models
     CURRENT_VERSION = "v1.2.0"
     def __init__(self):
+        self.different_version = False
         self.previous_window = None
         self.current_window = None
         self.is_stopwatch_running = False
@@ -74,6 +75,14 @@ class WindowController:  # receives and manages views' calls and models
         
         self.show_stopwatch()
         self.previous_window = self.current_window
+        
+        self.fetch_git_version()
+    
+    def fetch_git_version(self):
+        pass
+    
+    def auto_update_thread(self):
+        pass
     
     def start_timer(self):
         if self.is_timer_running:
