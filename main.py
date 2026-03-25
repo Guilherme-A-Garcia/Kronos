@@ -27,7 +27,6 @@ def dynamic_resolution(d_root, d_width, d_height):
 def isWindows():
     return sys.platform.startswith('nt')
 
-
 def grab_icon(icon:str):
     try:
         if getattr(sys, 'frozen', False):
@@ -240,7 +239,10 @@ class WindowController:  # receives and manages views' calls and models
         else:
             self.previous_window = self.current_window
             self.show_window(TimerView)
-        
+
+    def show_updating_window(self):
+        pass
+
     def show_previous(self):
         self.withdraw_current()
         self.current_window = self.previous_window
@@ -249,6 +251,9 @@ class WindowController:  # receives and manages views' calls and models
     def on_close(self):
             self.current_window.destroy()
             self.root.destroy()
+
+    def close_and_rename(self):
+        pass
 
 class StopwatchView(ctk.CTkToplevel):  # contains UI
     def __init__(self, controller):
@@ -407,7 +412,12 @@ class TimerView(ctk.CTkToplevel):  # contains UI
         if self.timer_counter_seconds.get().strip() == '':
             self.timer_counter_seconds.configure(text_color='gray')
             self.timer_counter_seconds.insert(0, 's')
-        
+
+class UpdatingWindow(ctk.CTkToplevel):
+    def __init__(self, app):
+        super().__init__(app.root)
+        self.app = app
+
 class StopwatchModel:  # contains logic independently
     def __init__(self):
         self.time_units = 0
